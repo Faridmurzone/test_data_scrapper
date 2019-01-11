@@ -5,22 +5,22 @@ echo "<a href='../../index.php' class='btn btn-info mb-3' role='button'>Volver a
 
 // Chequear si se le pasan parámetros para leer los links
 if(isset($_GET['fromArray'])) {
-$fromArray = $_GET['fromArray'];
+	$fromArray = $_GET['fromArray'];
 } else {
-$fromArray = $defaultFromArray;
+	$fromArray = $defaultFromArray;
 }
 if(isset($_GET['toArray'])) {
-$toArray = $_GET['toArray'];
+	$toArray = $_GET['toArray'];
 } else {
-$toArray = $defaultToArray;	
+	$toArray = $defaultToArray;	
 }
 
 // Iniciar el bucle con slice de los parámetros pasados
 $controlador = array_slice($links['falabella'], $fromArray, $toArray);
 foreach($controlador as $cat => $link) {
 	$screenshotID++;
-	$html = file_get_html($link);
-	if($html != FALSE) {
+	if($link != FALSE) {
+		$html = file_get_html($link);
 		$producto = $html->find('div[class=fb-pod-group__item]');
 		foreach ($producto as $prod) {
 		$cantidad++;
@@ -30,20 +30,28 @@ foreach($controlador as $cat => $link) {
 		$img = $prod->find('img',0)->src;	
 		$category = preg_replace('/[0-9]+/', '', $cat);
 		$retailer = "FALABELLA";
-		$date = date("Y-m-d H:i:s");
-		$screenshot = "/" . date('Y-m-d') . "/". strtolower($retailer) . "_" . $screenshotID . ".jpg";
+		$screenshot = "/" . $date . "/". strtolower($retailer) . "_" . $screenshotID . ".jpg";
 		$marca = $prod->find('h3[class=fb-responsive-stylised-caps fb-pod__title]',0)->plaintext;
 		
-		// Entrando al producto
-		$html_prod = file_get_html($link);
-		$modelo = $html_prod->find('td[class=fb-product-information__specification__table__data]',0)->plaintext;
-
+		// Query para ver si el producto existe y es igual
+		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND date LIKE '%$yesterday%' AND retailer LIKE '%$retailer%';");
+		while($row = mysqli_fetch_array($query)) {
+			if($row['title'] == $titulo) {
+				$modelo = $row['modelo'];
+			} 
+		}
+		$date = date("Y-m-d H:i:s");
+		if(!mysqli_fetch_array($query)){
+			// Entrando al producto
+			$html_prod = file_get_html($link);
+			$modelo = $html_prod->find('td[class=fb-product-information__specification__table__data]',0)->plaintext;
+		}
 		// Busca Combos
-		include('../../resources/library/findCombo.php');
+		include(LIB.'findCombo.php');
 		
-		//$modelo = "Modelo";
+		// Imprime resultados encontrados
 		include(ASSETS.'print.php');
-		// PARA INSERTAR EN DB
+		// Inserta en la DB
 		include(DB.'insert.php');
 }
 	// Imprimir mensajes
@@ -55,7 +63,7 @@ foreach($controlador as $cat => $link) {
 
 
 // Genera parámetros para el próximo slice
-$newTo = $_GET['toArray'] + $defaultCant;
+$newTo = $toArray + $defaultCant;
 if($fromArray < 317) {
 $remain = 317 - $toArray;
 echo "<br />Ye cargaron ". $toArray . " categorías. Faltan " . $remain .". Si desea que la carga se siga realizando automáticamente: 

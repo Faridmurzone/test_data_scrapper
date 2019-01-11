@@ -49,7 +49,7 @@ foreach($controlador as $cat => $link) {
 			
 		$yesterday = strtotime( '-1 day', strtotime ( $date ));
 		$yesterday = date( 'Y-m-j', $yesterday);
-		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND date LIKE '%$yesterday%' AND retailer LIKE 'MUSIMUNDO';");
+		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND date LIKE '%$yesterday%' AND retailer LIKE '%$retailer%';");
 		// Para no cargar DOM de producto individual busca primero si ya existe el producto
 		while($row = mysqli_fetch_array($query)) {
 			if($row['title'] == $titulo) {

@@ -18,7 +18,7 @@ $art_today_ribeiro = $conn->query("SELECT * FROM listado_productos WHERE date LI
 $art_all_ribeiro = $conn->query("SELECT * FROM listado_productos WHERE retailer LIKE '%RIBEIRO%';");
 $art_today_falabella = $conn->query("SELECT * FROM listado_productos WHERE date LIKE '%$date%' AND retailer LIKE 'FALABELLA';");
 $art_all_falabella = $conn->query("SELECT * FROM listado_productos WHERE retailer LIKE '%FALABELLA%';");
-$art_today_anonima = $conn->query("SELECT * FROM listado_productos WHERE date LIKE '%$date%' AND retailer LIKE 'ANONIMA';");
+$art_today_anonima = $conn->query("SELECT * FROM listado_productos WHERE date LIKE '%$date%' AND retailer LIKE '%ANONIMA%';");
 $art_all_anonima = $conn->query("SELECT * FROM listado_productos WHERE retailer LIKE '%ANONIMA%';");
 $conn->close();
 
@@ -128,9 +128,10 @@ else
     <div class="card">
       <img class="card-img-top" src="./assets/img/musimundo.png" alt="Musimundo">
         <div class="card-body">
-        <h5 class="card-title text-center">Musimundo</h5>
-        <p class="card-text text-center"><a href="./webs/ver.php?retailer=MUSIMUNDO&date=last">Ver productos</a><br />  
-        <a href='./webs/musimundo/musimundo.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
+        <p class="card-text text-center">
+          <a href="./webs/ver.php?retailer=MUSIMUNDO&date=last">Ver productos</a> <br />
+          <a href="./webs/cats.php?retailer=MUSIMUNDO">Ver por categorías</a> <br />
+          <a href='./webs/musimundo/musimundo.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
         <form class="text-center" method="get"> 
         <label class="form-control-label mb-0">Encontrados hoy: <?php echo mysqli_num_rows($art_today_musimundo); ?> </label><br />
         <label class="form-control-label mb-0">Total musimundo: <?php echo mysqli_num_rows($art_all_musimundo); ?>
@@ -142,8 +143,8 @@ else
     <div class="card">
     <img class="card-img-top" src="./assets/img/compumundo.png" alt="Compumundo">
     <div class="card-body">
-      <h5 class="card-title text-center">Compumundo</h5>
       <p class="card-text text-center"><a href="./webs/ver.php?retailer=COMPUMUNDO&date=last">Ver productos</a> <br />
+      <a href="./webs/cats.php?retailer=COMPUMUNDO">Ver por categorías</a> <br />
       <a href='./webs/compumundo/compumundo.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Encontrados hoy: <?php echo mysqli_num_rows($art_today_compumundo); ?> </label><br />
@@ -157,8 +158,8 @@ else
     <div class="card">
     <img class="card-img-top" src="./assets/img/fravega.png" alt="Fravega">
     <div class="card-body">
-      <h5 class="card-title text-center">Fravega</h5>
-      <p class="card-text text-center"><a href="./webs/ver.php?retailer=FRAVEGA&date=last">Ver productos </a><br />-<br /> 
+      <p class="card-text text-center"><a href="./webs/ver.php?retailer=FRAVEGA&date=last">Ver productos </a><br />
+      <a href="./webs/cats.php?retailer=FRAVEGA">Ver por categorías</a> <br />
       <a href='./webs/fravega/fravega.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Encontrados hoy: <?php echo mysqli_num_rows($art_today_fravega); ?> </label><br />
@@ -174,8 +175,8 @@ else
     <div class="card">
       <img class="card-img-top" src="./assets/img/garbarino.png" alt="Garbarino">
       <div class="card-body">
-      <h5 class="card-title text-center">Garbarino</h5>
       <p class="card-text text-center"><a href="./webs/ver.php?retailer=GARBARINO&date=last">Ver productos</a> <br />
+      <a href="./webs/cats.php?retailer=GARBARINO">Ver por categorías</a> <br />
       <a href='./webs/garbarino/garbarino.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Encontrados hoy: <?php echo mysqli_num_rows($art_today_garbarino); ?> </label><br />
@@ -189,8 +190,8 @@ else
     <div class="card">
     <img class="card-img-top" src="./assets/img/ribeiro.png" alt="Ribeiro">
     <div class="card-body">
-      <h5 class="card-title text-center">Ribeiro</h5>
       <p class="card-text text-center"><a href="./webs/ver.php?retailer=RIBEIRO&date=last">Ver productos </a><br />
+      <a href="./webs/cats.php?retailer=RIBEIRO">Ver por categorías</a> <br />
       <a href='./webs/ribeiro/ribeiro.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Artículos encontrados hoy: <?php echo mysqli_num_rows($art_today_ribeiro); ?> </label><br />
@@ -204,8 +205,8 @@ else
     <div class="card">
       <img class="card-img-top" src="./assets/img/falabella.png" alt="Falabella">
       <div class="card-body">
-      <h5 class="card-title text-center">Falabella</h5>
       <p class="card-text text-center"><a href="./webs/ver.php?retailer=FALABELLA&date=last">Ver productos </a><br />
+      <a href="./webs/cats.php?retailer=FALABELLA">Ver por categorías</a> <br />
       <a href='./webs/falabella/falabella.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Artículos encontrados hoy: <?php echo mysqli_num_rows($art_today_falabella); ?> </label><br />
@@ -219,9 +220,9 @@ else
     <div class="card">
       <img class="card-img-top" src="./assets/img/laanonima.jpg" alt="La Anonima">
       <div class="card-body">
-      <h5 class="card-title text-center">La Anonima</h5>
       <p class="card-text text-center"><a href="./webs/ver.php?retailer=ANONIMA&date=last">Ver productos </a><br />
-      <a href='./webs/falabella/anonima.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
+      <a href="./webs/cats.php?retailer=LAANONIMA">Ver por categorías</a> <br />
+      <a href='./webs/laanonima/laanonima.php' onclick="return confirm('Estás seguro que deseas volver a cargar los productos de hoy? No se sobreescribirán los que ya se hayan cargado más temprano.')">Volver a capturar productos</a></p>
       <form class="text-center" method="get"> 
       <label class="form-control-label mb-0">Artículos encontrados hoy: <?php echo mysqli_num_rows($art_today_anonima); ?> </label><br />
       <label class="form-control-label mb-0">Artículos total La Anonima: <?php echo mysqli_num_rows($art_all_anonima); ?>

@@ -28,6 +28,7 @@ foreach($controlador as $cat => $link) {
     foreach ($producto as $prod) {
 		$cantidad++;
 		$titulo = $prod->find('h3[class=itemBox--title]',0)->plaintext;
+		$modelo = $titulo;	
 		$link = "https://www.garbarino.com" . $prod->find('a',0)->href;
 		$img = $prod->find('img',0)->src;	
 		$category = preg_replace('/[0-9]+/', '', $cat);
@@ -35,7 +36,7 @@ foreach($controlador as $cat => $link) {
 		$screenshot = "/" . date('Y-m-d') . "/". strtolower($retailer) . "_" . $screenshotID . ".jpg";
 		// Query para ver si el producto existe y es igual
 		$precio = $prod->find('span[class=value-item]',0);
-		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND precio_lista LIKE '%$precio%' AND date LIKE '%$yesterday%' AND retailer LIKE '%GARBARINO%';");
+		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND precio_lista LIKE '%$precio%' AND date LIKE '%$yesterday%' AND retailer LIKE '%$retailer%';");
 		// Para no cargar DOM de producto individual busca primero si ya existe el producto
 		while($row = mysqli_fetch_array($query)) {
 			if($row['title'] == $titulo) {
@@ -61,14 +62,11 @@ foreach($controlador as $cat => $link) {
 		}
 
 		// Busca Combos
-		include('../../resources/library/findCombo.php');
-		
-		$modelo = $titulo;	
-					
+		include(LIB.'findCombo.php');
+		// Imprime en pantalla los resultados encontrados
 		include(ASSETS.'print.php');
-
-		// PARA INSERTAR EN DB
-	include(DB.'insert.php');
+		// Inserta en la DB
+		include(DB.'insert.php');
 	}
 	// Imprimir mensajes
 	echo "<div class='p-3 mb-2 bg-success text-white'>Categoría $cat cargada... ok</div>";

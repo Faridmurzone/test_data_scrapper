@@ -13,7 +13,6 @@ require_once(LIB.'/links.php');
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-118964129-1');
 </script>
 
@@ -29,7 +28,7 @@ require_once(LIB.'/links.php');
 
 <div class="container">
 <br />
-   <div class="row"><img src="./assets/img/logo.png" /></div><hr />
+   <div class="row"><img src="/mbot/assets/img/logo.png" /></div><hr />
 <br />
 
 

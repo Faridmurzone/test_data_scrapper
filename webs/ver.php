@@ -63,7 +63,7 @@ function myFunction() {
     <div class="table-responsive">
       <a href='../index.php' class='btn btn-light' role='button'>Volver al index</a> 
       <!-- Búsqueda avanzada -->
-<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#buscar" data-whatever="@mdo">Búsqueda avanzada</button>
+<!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#buscar" data-whatever="@mdo">Búsqueda avanzada</button> -->
 
 <div class="modal fade" id="buscar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -107,7 +107,7 @@ function myFunction() {
 </div>
       <!-- Fin de búsqueda avanzada -->
       <!-- Comparación -->
-<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#comparar" data-whatever="@mdo">Comparar en el tiempo</button>
+<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#comparar" data-whatever="@mdo">Comparar en el tiempo</button> -->
 
 <div class="modal fade" id="comparar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

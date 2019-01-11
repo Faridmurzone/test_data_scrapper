@@ -40,7 +40,7 @@ foreach($controlador as $cat => $link) {
 		$screenshot = "/" . date('Y-m-d') . "/". strtolower($retailer) . "_" . $screenshotID . ".jpg";
 		
 		// Query para ver si el producto existe y es igual
-		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND precio_lista LIKE '%$precio_lista%' AND date LIKE '%$yesterday%' AND retailer LIKE '%FRAVEGA%';");
+		$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND precio_lista LIKE '%$precio_lista%' AND date LIKE '%$yesterday%' AND retailer LIKE '%$retailer%';");
 		while($row = mysqli_fetch_array($query)) {
 			if($row['title'] == $titulo) {
 				$marca = $row['marca'];
