@@ -201,7 +201,7 @@ while($row = mysqli_fetch_array($result))
 
 $time_elapsed = microtime(true) - $start;
 $tieme_readable = conversorSegundosHoras($time_elapsed);
-echo "El script de LaAnonima se ejecutó en $tieme_readable segundos y se cargaron $cantidad productos \n";
+echo "El script de Ribeiro se ejecutó en $tieme_readable segundos y se cargaron $cantidad productos \n";
 $htmlStr = ob_get_contents();
 ob_end_clean(); 
 $filename = date('Y-m-d') . $retailer . "_log.php";
