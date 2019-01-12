@@ -17,9 +17,13 @@ if(isset($_GET['toArray'])) {
 	$toArray = $defaultToArray;	
 }
 
-// Iniciar el bucle con slice de los parámetros pasados
-$controlador = array_slice($links['ribeiro'], $fromArray, $toArray);
-foreach($controlador as $cat => $link) {
+$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE ribeiro_check = '1' LIMIT 2 OFFSET $fromArray;");
+
+// Iniciar el bucle
+while($row = mysqli_fetch_array($result))
+{
+	$link = $row['ribeiro'];
+	$cat = $row['category'];
 	$screenshotID++;
 	if($link != NULL) {
 	$html = file_get_html($link);
@@ -60,7 +64,6 @@ foreach($controlador as $cat => $link) {
 			}
 		}
 		$date = date("Y-m-d H:i:s");
-
 
 		// Busca Combos
 		include(LIB.'findCombo.php');
@@ -121,22 +124,17 @@ foreach($controlador as $cat => $link) {
 	} else {
 	echo "<div class='p-3 mb-2 bg-warning text-white' id='helpdiv'>Categoría $cat no contiene productos nuevos...</div>";
 	}
-} 
+}
 
-// Genera parámetros para el próximo slice
-$newTo = $toArray + $defaultCant;
-if($fromArray < 317) {
-	$remain = 317 - $toArray;
-	echo "<br />Ye cargaron ". $toArray . " categorías. Faltan " . $remain .". Si desea continuar cargando productos automáticamente: 
+	// Genera parámetros para el próximo slice
+	$newTo = $toArray + $defaultCant;
+	echo "<br />Ye se cargó la categoría. Si desea continuar cargando productos automáticamente: 
 	<a href='./ribeiro.php?fromArray=".++$toArray."&toArray=".$newTo."&auto' />haga click aquí</a>.";
-
 	// Pasa a la próxima carga
 	$newURL = "./ribeiro.php?fromArray=".++$toArray."&toArray=".$newTo."&auto";
 		if(isset($_GET['auto'])){
 		echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $newURL . '">';
 		}
-} else {
-	echo "<br />Ye se cargaron todas las categorías.";
-}
+
 include(ASSETS . 'footer.php');
 ?>

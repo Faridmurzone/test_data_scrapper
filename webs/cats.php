@@ -4,7 +4,7 @@ include('../assets/header2.php');
 // Toma retailer. Realiza query.
 if(isset($_GET['retailer'])) {
     $retailer = $_GET['retailer'];
-    $result = mysqli_query($conn,"SELECT id, $retailer, linea, category FROM listado_screens WHERE $retailer != '' GROUP BY category  ORDER BY linea ASC LIMIT 500 OFFSET 1;");
+    $result = mysqli_query($conn,"SELECT id, $retailer, linea, category FROM listado_screens WHERE $retailer != '' ORDER BY linea ASC LIMIT 500 OFFSET 1;"); // GROUP BY category 
   } else {
     $result = mysqli_query($conn,"SELECT * FROM listado_screens;");
   }

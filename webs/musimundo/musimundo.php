@@ -15,9 +15,12 @@ if(isset($_GET['toArray'])) {
 	$toArray = $defaultToArray;	
 }
 
-// Iniciar el bucle con slice de los parámetros pasados
-$controlador = array_slice($links['musimundo'], $fromArray, $toArray);
-foreach($controlador as $cat => $link) {
+$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE musimundo_check = '1' LIMIT 2 OFFSET $fromArray;");
+// Iniciar el bucle
+while($row = mysqli_fetch_array($result))
+{
+	$link = $row['musimundo'];
+	$cat = $row['category'];
 	$screenshotID++;
 	if($link != NULL) {
 	$html = file_get_html($link);    
