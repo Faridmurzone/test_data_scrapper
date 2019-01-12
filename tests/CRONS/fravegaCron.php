@@ -111,7 +111,7 @@ while($row = mysqli_fetch_array($result))
                 $sql = "INSERT INTO listado_productos (title, precio_lista, precio_oferta, category, retailer, marca, modelo, date, combo, imagen, link, screenshot) 
                     VALUES ('$titulo', '$precio_lista', '$precio_oferta', '$category', '$retailer', '$marca', '$modelo', '$date', '$combo', '$img', '$link', '$screenshot')";
                 if ($conn->query($sql) === TRUE) {
-                    echo "Producto insertado \n";
+                    echo ".";
                 } else {
                     echo "Error: " . $sql . " " . $conn->error;
                 }
