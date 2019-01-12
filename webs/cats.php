@@ -4,7 +4,8 @@ include('../assets/header2.php');
 // Toma retailer. Realiza query.
 if(isset($_GET['retailer'])) {
     $retailer = $_GET['retailer'];
-    $result = mysqli_query($conn,"SELECT id, $retailer, linea, category FROM listado_screens WHERE $retailer != '' ORDER BY linea ASC LIMIT 500 OFFSET 1;"); // GROUP BY category 
+    $ret_check = $retailer."_check";
+    $result = mysqli_query($conn,"SELECT id, $retailer, $ret_check, linea, category FROM listado_screens WHERE $retailer != '' ORDER BY linea ASC LIMIT 500 OFFSET 1;"); // GROUP BY category
   } else {
     $result = mysqli_query($conn,"SELECT * FROM listado_screens;");
   }
@@ -31,7 +32,12 @@ if(isset($_GET['retailer'])) {
         <?
         while($row = mysqli_fetch_array($result))
         {
-        echo "<li><label><input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' checked><span> <b>(".$row['linea'].") </b>".$row['category']." </span></label></li>";
+            if($row[$ret_check] == 1){
+                $checked = "checked";
+            } else {
+                $checked = "unchecked";
+            }
+        echo "<li><label><input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked><span> <b>(".$row['linea'].") </b>".$row['category']." </span></label></li>";
         } 
         ?>
     </ol>
