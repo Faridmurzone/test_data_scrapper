@@ -16,8 +16,12 @@ if(isset($_GET['toArray'])) {
 	$toArray = $defaultToArray;	
 }
 
-$controlador = array_slice($links['laanonima'], $fromArray, $toArray);
-foreach($controlador as $cat => $link) {
+$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE laanonima_check = '1' LIMIT 2 OFFSET $fromArray;");
+// Iniciar el bucle
+while($row = mysqli_fetch_array($result))
+{
+	$link = $row['laanonima'];
+	$cat = $row['category'];
 	$screenshotID++;
 	if($link != FALSE) {
     $html = file_get_html($link);    

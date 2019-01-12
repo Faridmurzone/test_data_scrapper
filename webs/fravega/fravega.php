@@ -18,9 +18,12 @@ if(isset($_GET['toArray'])) {
 }
 ini_set("user_agent","Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0");
 
-// Iniciar el bucle con slice de los parámetros pasados
-$controlador = array_slice($links['fravega'], $fromArray, $toArray);
-foreach($controlador as $cat => $link) {
+$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE fravega_check = '1' LIMIT 2 OFFSET $fromArray;");
+// Iniciar el bucle
+while($row = mysqli_fetch_array($result))
+{
+	$link = $row['fravega'];
+	$cat = $row['category'];
 	$screenshotID++;
 	$context = stream_context_create(array(
 	    'http' => array(

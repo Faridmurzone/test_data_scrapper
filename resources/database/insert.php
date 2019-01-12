@@ -1,5 +1,4 @@
 <?php
-
 	$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND retailer = '$retailer' AND date LIKE '%" . date("Y-m-d") . "%'");
 	$exists = mysqli_num_rows($query);
 	if(!$exists){

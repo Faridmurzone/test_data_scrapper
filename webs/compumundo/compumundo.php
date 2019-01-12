@@ -16,9 +16,12 @@ if(isset($_GET['toArray'])) {
 	$toArray = $defaultToArray;	
 }
 
-// Iniciar el bucle con slice de los parámetros pasados
-$controlador = array_slice($links['compumundo'], $fromArray, $toArray);
-foreach($controlador as $cat => $link) {
+$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE compumundo_check = '1' LIMIT 2 OFFSET $fromArray;");
+// Iniciar el bucle
+while($row = mysqli_fetch_array($result))
+{
+	$link = $row['compumundo'];
+	$cat = $row['category'];
 	$screenshotID++;
 	if($link != NULL) {
     $html = file_get_html($link);    
@@ -33,12 +36,18 @@ foreach($controlador as $cat => $link) {
 			$precio_lista = $prod->find('span[class=value-item]',0)->plaintext;
 			$precio_oferta = NULL;
 		} else {
-			$precio_lista = $prod->find('span[class=value-item]',0)->plaintext; 
+			$precio_oferta = $prod->find('span[class=value-item]',0)->plaintext; 
 			if($prod->find('del',0)) { 
-			$precio_oferta = $prod->find('del',0)->plaintext;
+			$precio_lista = $prod->find('del',0)->plaintext;
 			} else {
-			$precio_oferta = $prod->find('span[class=value-note]',0)->plaintext;	
+			$precio_lista = $prod->find('span[class=value-note]',0)->plaintext;	
 			}
+		}
+
+		if($precio_oferta > $precio_lista) {
+			$temp = $precio_oferta;
+			$precio_lista = $precio_oferta;
+			$precio_oferta = $temp;
 		}
 
 		$category = preg_replace('/[0-9]+/', '', $cat);
@@ -80,21 +89,14 @@ foreach($controlador as $cat => $link) {
 
 
 // Genera parámetros para el próximo slice
-$newTo = $toArray + $defaultCant;
-	if($fromArray < 317) {
-		$remain = 317 - $toArray;
-		echo "<br />Ye cargaron ". $toArray . " categorías. Faltan " . $remain .". Si desea que la carga se siga realizando automáticamente: 
-		<a href='./compumundo.php?fromArray=".++$toArray."&toArray=".$newTo."&auto' />haga click aquí</a>. De lo contrario continuará automáticamente en algunos segundos";
-		// Pasa a la próxima carga
-		$newURL = "./compumundo.php?fromArray=".++$toArray."&toArray=".$newTo."&auto";
+	$newTo = $toArray + $defaultCant;
+	echo "<br />Ye se cargó la categoría. Si desea continuar cargando productos automáticamente: 
+	<a href='./compumundo.php?fromArray=".++$toArray."&toArray=".$newTo."&auto' />haga click aquí</a>.";
+	// Pasa a la próxima carga
+	$newURL = "./compumundo.php?fromArray=".++$toArray."&toArray=".$newTo."&auto";
 		if(isset($_GET['auto'])){
-			echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $newURL . '">';
+		echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $newURL . '">';
 		}
-	} else {
-		echo "<br />Ye se cargaron todas las categorías.";
-	}
-	
-	include(ASSETS . 'footer.php');
 
-
+include(ASSETS . 'footer.php');
 ?>
