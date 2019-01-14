@@ -1,2 +1,4 @@
 config.php
 /resources/database/config.php
+/crons/
+/crons/logs/
