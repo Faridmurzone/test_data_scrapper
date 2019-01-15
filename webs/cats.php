@@ -22,7 +22,7 @@ if(isset($_GET['retailer'])) {
         }
     </script>
     <div>
-    <a href='../add.php' class='btn btn-light' role='button'>Agregar categoría</a> 
+    <a href='./add.php' class='btn btn-light' role='button'>Agregar categoría</a> 
     <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
     <hr />
     <label><input type="checkbox" onClick="toggle(this)" checked/> Seleccionar/Deseleccionar todo</label><br/>
@@ -43,7 +43,7 @@ if(isset($_GET['retailer'])) {
     </ol>
     </form>
     <a href='../add.php' class='btn btn-light' role='button'>Agregar categoría</a> 
-    <a href='../add.php' class='btn btn-light' role='button'>Guardar Cambios</a> 
+    <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
 
 </div>
 
