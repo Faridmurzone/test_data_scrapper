@@ -1,4 +1,3 @@
 config.php
 /resources/database/config.php
-/cron/
 /cron/logs/
