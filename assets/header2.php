@@ -30,7 +30,7 @@ require_once(LIB.'/links.php');
 
 <div class="container">
 <br />
-   <div class="row"><img src="/mbot/assets/img/logo.png" /></div><hr />
+   <a href="/mbot/index.php"><div class="row"><img src="/mbot/assets/img/logo.png" /></div></a><hr />
 <br />
 
 

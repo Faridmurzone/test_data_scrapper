@@ -14,7 +14,7 @@ include('./assets/stats.php');
 <div class="card mt-5">
   <div class="card-body">
     <h2 class="card-title">Administración</h2>
-    <p class="alert alert-danger" role="alert"">Advertencia: Desde la administración se pueden borrar y modificar valores que pueden ser irreversibles.</p>
+    <p class="alert alert-danger" role="alert">Advertencia: Desde la administración se pueden borrar y modificar valores que pueden ser irreversibles.</p>
     <p class="card-text"><small class="text-muted"></small></p>
     <div class="row"><div class="col-md-5 ml-5 mr-5 card">
       <h5>Borrar</h5>
