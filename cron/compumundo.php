@@ -3,7 +3,7 @@ set_time_limit(0);
 // error_reporting(0);
 $start = microtime(true);
 ob_start();
-require_once('./simple_html_dom.php');
+require_once('/var/www/html/mbot/cron/simple_html_dom.php');
 
 // FUNCIONES
 // Chequear headers para ver si URL funciona
