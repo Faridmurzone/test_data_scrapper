@@ -3,9 +3,9 @@ include('../config.php');
 include('../assets/header2.php');   
 // Toma retailer. Realiza query.
 if(isset($_GET['retailer'])) {
-    $retailer = $_GET['retailer'];
+    $retailer = strtolower($_GET['retailer']);
     $ret_check = $retailer."_check";
-    $result = mysqli_query($conn,"SELECT id, $retailer, $ret_check, linea, category FROM listado_screens WHERE $retailer != '' ORDER BY linea ASC LIMIT 500 OFFSET 1;"); // GROUP BY category
+    $result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE $retailer != '' ORDER BY linea ASC LIMIT 500 OFFSET 1;"); // GROUP BY category
   } else {
     $result = mysqli_query($conn,"SELECT * FROM listado_screens;");
   }
@@ -32,12 +32,22 @@ if(isset($_GET['retailer'])) {
         <?
         while($row = mysqli_fetch_array($result))
         {
-            if($row[$ret_check] == 1){
+            $linea = $row['linea'];
+            $category = $row['category'];
+            $link = $row[$retailer];
+            $rets_check = $row[strtolower($ret_check)];
+
+            if($rets_check == 1){
                 $checked = "checked";
             } else {
                 $checked = "unchecked";
             }
-        echo "<li><label><input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked><span> <b>(".$row['linea'].") </b>".$row['category']." <a href='#' onclick='editCat()'>Editar</a></span></label></li>";
+        echo "<li>
+            <label>
+            <input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked>
+            <span> <b>(".$linea.") </b>".$category." 
+            <a href='#' data-toggle='modal' data-target='#exampleModal'>Editar</a> - 
+            <a href='./".$retailer."/".$retailer.".php?cat=".$category."&link=".$link."'>Cargar</a></span></label></li>";
         } 
         ?>
     </ol>
@@ -46,14 +56,32 @@ if(isset($_GET['retailer'])) {
     <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
 
 </div>
-<script>
- function editCat(){
-    let ask = prompt('Inserta nuevo link', 'http://...');
-    // var ask=confirm("Are you sure");
-    if(ask){
-      window.location="./cats.php?editCat=...";
-     }
-}
-</script>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?
 include('../assets/footer.php');

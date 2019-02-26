@@ -18,20 +18,10 @@ if(isset($_GET['toArray'])) {
 }
 ini_set("user_agent","Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0");
 
-$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE fravega_check = '1' LIMIT 2 OFFSET $fromArray;");
-// Iniciar el bucle
-while($row = mysqli_fetch_array($result))
-{
-	$link = $row['fravega'];
-	$cat = $row['category'];
-	$screenshotID++;
-	$context = stream_context_create(array(
-	    'http' => array(
-	        'header' => array('User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201'),
-	    ),
-	));
-	if($link != NULL) {
-	$html = file_get_html($link, false, $context);
+if(isset($_GET['link'])) {
+	$link = $_GET['link'];
+	$cat = $_GET['cat'];
+	$html = file_get_html($link);
 	$producto = $html->find('div[class*=wrapData]');
 	foreach ($producto as $prod) {
 		$cantidad++;
@@ -68,35 +58,88 @@ while($row = mysqli_fetch_array($result))
 		// Imprimir resultados
 		include(ASSETS.'print.php');	
 		// PARA INSERTAR EN DB
-		include(DB.'insert.php');			
+		include(DB.'insert.php');	
 	}
-	// Carga completa mensajes
-	echo "<span class='p-3 mb-2 text-secondary'>Categoría $cat cargada... ok<br /> <br /></div>";
+} else {	
+	$result = mysqli_query($conn,"SELECT * FROM listado_screens WHERE fravega_check = '1' LIMIT 2 OFFSET $fromArray;");
+	// Iniciar el bucle
+	while($row = mysqli_fetch_array($result))
+	{
+		$link = $row['fravega'];
+		$cat = $row['category'];
+		$screenshotID++;
+		$context = stream_context_create(array(
+			'http' => array(
+				'header' => array('User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201'),
+			),
+		));
+		if($link != NULL) {
+		$html = file_get_html($link, false, $context);
+		$producto = $html->find('div[class*=wrapData]');
+		foreach ($producto as $prod) {
+			$cantidad++;
+			$titulo = $prod->find('h2',0)->plaintext;
+			$link = $prod->find('a',0)->href;
+			$precio_lista = $prod->find('em[class=ListPrice]',0)->plaintext; 
+			$category = preg_replace('/[0-9]+/', '', $cat);
+			$retailer = "FRAVEGA";
+			$screenshot = "/" . date('Y-m-d') . "/". strtolower($retailer) . "_" . $screenshotID . ".jpg";
+			
+			// Query para ver si el producto existe y es igual
+			$query = $conn->query("SELECT * FROM listado_productos WHERE title LIKE '%$titulo%' AND precio_lista LIKE '%$precio_lista%' AND date LIKE '%$yesterday%' AND retailer LIKE '%$retailer%';");
+			while($row = mysqli_fetch_array($query)) {
+				if($row['title'] == $titulo) {
+					$marca = $row['marca'];
+					$modelo = $row['modelo'];
+					$precio_oferta = $row['precio_oferta'];
+				} 
+			}
+			$date = date("Y-m-d H:i:s");
+			if(!mysqli_fetch_array($query)){
+				// Tomar marca y modelo
+				$html_prod = file_get_html($link);
+				if($html_prod != FALSE) {
+					$precio_oferta = $html_prod->find('strong[class=skuBestPrice]',0)->plaintext;
+					$modelo = $html_prod->find('td[class=value-field Modelo]',0)->plaintext;	
+					$hgroup = $html_prod->find('hgroup[class=title]',0);	
+					$marca = $hgroup->find('div[class=brandName]',0)->plaintext;
+				}
+			}
+			
+			// Busca Combos
+			include(LIB.'/findCombo.php');
+			// Imprimir resultados
+			include(ASSETS.'print.php');	
+			// PARA INSERTAR EN DB
+			include(DB.'insert.php');			
+		}
+		// Carga completa mensajes
+		echo "<span class='p-3 mb-2 text-secondary'>Categoría $cat cargada... ok<br /> <br /></div>";
+		} else {
+		echo "<span class='p-3 mb-2 text-warning'>Categoría $cat no contiene productos nuevos...</span><br />";
+		}
+	}
+
+	// Genera parámetros para el próximo slice
+	if(isset($_GET_['toArray'])) {
+		$newTo = $_GET['toArray'] + $defaultCant; }
+	else {
+		$newTo = 1;
+	}
+	if($fromArray < 317) {
+		$remain = 317 - $toArray;
+	echo "<br />Ye cargaron ". $toArray . " categorías. Faltan " . $remain .". Si desea que la carga se siga realizando automáticamente: 
+	<a href='./fravega.php?fromArray=".++$toArray."&toArray=".$newTo."&auto' />haga click aquí</a>. De lo contrario continuará automáticamente en algunos segundos";
+
+	// Pasa a la próxima carga
+	$newURL = "./fravega.php?fromArray=".++$toArray."&toArray=".$newTo."&auto";
+		if(isset($_GET['auto'])){
+		echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $newURL . '">';
+		}
 	} else {
-	echo "<span class='p-3 mb-2 text-warning'>Categoría $cat no contiene productos nuevos...</span><br />";
+	echo "<br />Ye se cargaron todas las categorías.";
 	}
 }
-
-// Genera parámetros para el próximo slice
-if(isset($_GET_['toArray'])) {
-	$newTo = $_GET['toArray'] + $defaultCant; }
-else {
-	$newTo = 1;
-}
-if($fromArray < 317) {
-	$remain = 317 - $toArray;
-echo "<br />Ye cargaron ". $toArray . " categorías. Faltan " . $remain .". Si desea que la carga se siga realizando automáticamente: 
-<a href='./fravega.php?fromArray=".++$toArray."&toArray=".$newTo."&auto' />haga click aquí</a>. De lo contrario continuará automáticamente en algunos segundos";
-
-// Pasa a la próxima carga
-$newURL = "./fravega.php?fromArray=".++$toArray."&toArray=".$newTo."&auto";
-	if(isset($_GET['auto'])){
-	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $newURL . '">';
-	}
-} else {
-echo "<br />Ye se cargaron todas las categorías.";
-}
-
 include(ASSETS . 'footer.php');
 ?>
 

@@ -1,7 +1,6 @@
 <?php 
 require_once(LIB . '/simple_html_dom.php');
 require_once(LIB.'/links.php');
-
 ?>
 
 <!DOCTYPE html>
