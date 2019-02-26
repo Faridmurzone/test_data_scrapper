@@ -120,9 +120,9 @@ while($row = mysqli_fetch_array($result))
 		}
 	}
 	// Imprimir mensajes
-	echo "<div class='p-3 mb-2 bg-success text-white' id='helpdiv'>Categoría $cat cargada... ok</div>";
+	echo "<div class='p-3 mb-2 bg-success text-white' id='helpdiv'>Categoría $cat cargada... ok<br /> <br /></div>";
 	} else {
-	echo "<div class='p-3 mb-2 bg-warning text-white' id='helpdiv'>Categoría $cat no contiene productos nuevos...</div>";
+	echo "<div class='p-3 mb-2 bg-warning text-white' id='helpdiv'>Categoría $cat no contiene productos nuevos...</span><br />";
 	}
 }
 

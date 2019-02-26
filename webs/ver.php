@@ -71,7 +71,7 @@ function myFunction() {
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Búsqueda</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+         <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
@@ -115,7 +115,7 @@ function myFunction() {
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Comparar un artículo</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+         <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">

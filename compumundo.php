@@ -63,9 +63,9 @@ foreach($controlador as $cat => $link) {
 		include(DB.'insert.php');
 	}
 	// Imprimir mensajes
-	echo "<div class='p-3 mb-2 bg-success text-white'>Categoría $cat cargada... ok</div>";
+	echo "<span class='p-3 mb-2 text-secondary'>Categoría $cat cargada... ok<br /> <br /></div>";
 	} else {
-	echo "<div class='p-3 mb-2 bg-warning text-white'>Categoría $cat no contiene productos nuevos...</div>";
+	echo "<span class='p-3 mb-2 text-warning'>Categoría $cat no contiene productos nuevos...</span><br />";
 	}
 }
 

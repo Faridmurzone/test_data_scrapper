@@ -37,7 +37,7 @@ if(isset($_GET['retailer'])) {
             } else {
                 $checked = "unchecked";
             }
-        echo "<li><label><input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked><span> <b>(".$row['linea'].") </b>".$row['category']." </span></label></li>";
+        echo "<li><label><input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked><span> <b>(".$row['linea'].") </b>".$row['category']." <a href='#' onclick='editCat()'>Editar</a></span></label></li>";
         } 
         ?>
     </ol>
@@ -46,6 +46,14 @@ if(isset($_GET['retailer'])) {
     <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
 
 </div>
-
+<script>
+ function editCat(){
+    let ask = prompt('Inserta nuevo link', 'http://...');
+    // var ask=confirm("Are you sure");
+    if(ask){
+      window.location="./cats.php?editCat=...";
+     }
+}
+</script>
 <?
 include('../assets/footer.php');

@@ -81,9 +81,9 @@ while($row = mysqli_fetch_array($result))
 		include(DB.'insert.php');
 	}
 	// Imprimir mensajes
-	echo "<div class='p-3 mb-2 bg-success text-white' id='div-alert'>Categoría $cat cargada... ok</div>";
+	echo "<div class='p-3 mb-2 bg-success text-white' id='div-alert'>Categoría $cat cargada... ok<br /> <br /></div>";
 	} else {
-	echo "<div class='p-3 mb-2 bg-warning text-white' id='div-alert'>Categoría $cat no contiene productos nuevos...</div>";
+	echo "<div class='p-3 mb-2 bg-warning text-white' id='div-alert'>Categoría $cat no contiene productos nuevos...</span><br />";
 	}
 	break;
 }

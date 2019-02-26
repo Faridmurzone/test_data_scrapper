@@ -25,6 +25,19 @@ include('./assets/stats.php');
       </form>
     </div>  
     <div class="col-md-5 ml-5 card">
+      <h5>Ver Logs</h5>
+      <ul>
+        <li><a href="./webs/log.php">Fravega</a></li>
+        <li><a href="#">Garbarino</a></li>
+        <li><a href="#">Musimundo</a></li>
+        <li><a href="#">Ribeiro</a></li>
+        <li><a href="#">Compumundo</a></li>
+        <li><a href="#">Falavella</a></li>
+        <li><a href="#">LaAnonima</a></li>
+      </ul>
+      <?php 
+
+      ?>
       <h5>Backup</h5>
       <form class="text-center" name="export" method="post" action="./resources/database/exportdb.php">
       <button class="btn btn-info" type="submit">Exportar base de datos</button><br /><br />

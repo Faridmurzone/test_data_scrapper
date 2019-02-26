@@ -186,9 +186,9 @@ while($row = mysqli_fetch_array($result))
 	}
          // Imprimir mensajes
 		 $date = date("Y-m-d H:i:s");
-		 echo "$date : Categoría $cat cargada... ok \n";
+		 echo "\n<span class='text-success'>$date : Categoría $cat cargada.</span><br />\n";
 		 } else {
-		 echo "\n <div class='alert alert-warning'>URL $link es inválida...</div> \n";
+		 echo "\n<span class='text-warning'>URL $link es inválida...</span><br /> \n";
 		 }
  }
  $time_elapsed = microtime(true) - $start;
