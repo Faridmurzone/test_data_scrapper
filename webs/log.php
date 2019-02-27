@@ -38,7 +38,7 @@ include('../assets/header2.php');
 
 <?php
 $results_array = array();
-$log_directory = '/Applications/XAMPP/htdocs/mbot/cron/logs/';
+$log_directory = '/Applications/XAMPP/htdocs/test_data_scrapper/cron/logs/';
 
 $itemsByRet = glob($log_directory.'*'.$retailer.'*');
 $itemsByDate = glob($log_directory.'*'.$byDate.'*');

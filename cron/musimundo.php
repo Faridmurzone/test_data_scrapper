@@ -128,13 +128,15 @@ while($row = mysqli_fetch_array($result))
                     VALUES ('$titulo', '$precio_lista', '$precio_oferta', '$category', '$retailer', '$marca', '$modelo', '$date', '$combo', '$img', '$link', '$screenshot')";
                 if ($conn->query($sql) === TRUE) {
                      echo "";
-                } else {
-                    echo "Error: " . $sql . " " . $conn->error;
-                }
-            echo $conn->error;
-            } else {
-                echo "El producto " . $titulo . " ya fue cargado hoy \n";
-            }
+                } 
+                // else {
+            //         echo "Error: " . $sql . "" . $conn->error;
+            //     }
+            // echo $conn->error;
+            } 
+            // else {
+            //     echo "El producto " . $titulo . " ya fue cargado hoy \n";
+            // }
             // Fin del insert    
         }
 

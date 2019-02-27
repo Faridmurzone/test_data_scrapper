@@ -65,6 +65,8 @@ while($row = mysqli_fetch_array($result))
 {
 	$link = $row['laanonima'];
     $cat = $row['category'];
+    $id = $row['id'];
+
     $screenshotID++;
     $validURL = get_http_response_code($link);
         if($validURL == 200) {
@@ -112,20 +114,16 @@ while($row = mysqli_fetch_array($result))
                     VALUES ('$titulo', '$precio_lista', '$precio_oferta', '$category', '$retailer', '$marca', '$modelo', '$date', '$combo', '$img', '$link', '$screenshot')";
                 if ($conn->query($sql) === TRUE) {
                      echo "";
-                } else {
-                    echo "Error: " . $sql . " " . $conn->error;
-                }
+                } 
             echo $conn->error;
-            } else {
-                echo "El producto " . $titulo . " ya fue cargado hoy \n";
             }
             // Fin del insert    
         }
         // Imprimir mensajes
         $date = date("Y-m-d H:i:s");
-        echo "\n<span class='text-success'>$date : Categoría $cat cargada.</span><br />\n";
+        echo "<span class='text-success'>[Id: $id] $date : Categoría $cat cargada.</span><br />\n";
         } else {
-        echo "\n<span class='text-warning'>URL $link es inválida...</span><br /> \n";
+        echo "<span class='text-warning'>[Id: $id] Hubo un error con la categoría $cat . Compruebe el $link .</span><br /> \n";
         }
 }
 $time_elapsed = microtime(true) - $start;

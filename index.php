@@ -1,9 +1,4 @@
 <?php
-ini_set("display_errors", "1");
-error_reporting(E_ALL);
-ini_set('memory_limit', '-1');
-
-
 require_once('./config.php');
 include(ASSETS . 'header2.php'); 
 include('./assets/stats.php'); 
@@ -27,13 +22,13 @@ include('./assets/stats.php');
     <div class="col-md-5 ml-5 card">
       <h5>Ver Logs</h5>
       <ul>
-        <li><a href="./webs/log.php">Fravega</a></li>
-        <li><a href="#">Garbarino</a></li>
-        <li><a href="#">Musimundo</a></li>
-        <li><a href="#">Ribeiro</a></li>
-        <li><a href="#">Compumundo</a></li>
-        <li><a href="#">Falavella</a></li>
-        <li><a href="#">LaAnonima</a></li>
+        <li><a href="./webs/log.php?retailer=fravega">Fravega</a></li>
+        <li><a href="./webs/log.php?retailer=garbarino">Garbarino</a></li>
+        <li><a href="./webs/log.php?retailer=musimundo">Musimundo</a></li>
+        <li><a href="./webs/log.php?retailer=ribeiro">Ribeiro</a></li>
+        <li><a href="./webs/log.php?retailer=compumundo">Compumundo</a></li>
+        <li><a href="./webs/log.php?retailer=falabella">Falabella</a></li>
+        <li><a href="./webs/log.php?retailer=laanonima">LaAnonima</a></li>
       </ul>
       <?php 
 
