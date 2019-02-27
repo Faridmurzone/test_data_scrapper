@@ -9,6 +9,7 @@ if(isset($_GET['retailer'])) {
   } else {
     $result = mysqli_query($conn,"SELECT * FROM listado_screens;");
   }
+  $log_filename = date('Y-m-d').$retailer.'_log.php';
 ?>
 <div>
 <h1>Categorías para <? echo $retailer; ?></h1>
@@ -22,7 +23,8 @@ if(isset($_GET['retailer'])) {
         }
     </script>
     <div>
-    <a href='./add.php' class='btn btn-light' role='button'>Agregar categoría</a> 
+    <!-- <a href='./add.php' class='btn btn-light' role='button'>Agregar categoría</a>  -->
+    <a href='./log.php?view=<?php echo $log_filename ?>' class='btn btn-light' role='button'>Ver log de última carga</a> 
     <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
     <hr />
     <label><input type="checkbox" onClick="toggle(this)" checked/> Seleccionar/Deseleccionar todo</label><br/>
@@ -46,13 +48,13 @@ if(isset($_GET['retailer'])) {
             <label>
             <input class='cat' type='checkbox' name='check_list[]' value='".$row['id']."' $checked>
             <span> <b>(".$linea.") </b>".$category." 
-            <a href='#' data-toggle='modal' data-target='#exampleModal'>Editar</a> - 
+            <a href='./editcat.php?retailer=".$retailer."&id=".$row['id']."'>Editar</a> - 
             <a href='./".$retailer."/".$retailer.".php?cat=".$category."&link=".$link."'>Cargar</a></span></label></li>";
         } 
         ?>
     </ol>
     </form>
-    <a href='../add.php' class='btn btn-light' role='button'>Agregar categoría</a> 
+    <!-- <a href='../add.php' class='btn btn-light' role='button'>Agregar categoría</a>  -->
     <a class='btn btn-light' role='button' onclick="document.getElementById('checkboxes').submit()">Guardar Cambios</a> 
 
 </div>
