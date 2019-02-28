@@ -1,6 +1,6 @@
 <?php
-set_time_limit(0);
-error_reporting(0);
+// set_time_limit(0);
+// error_reporting(0);
 $start = microtime(true);
 ob_start();
 require_once('/var/www/html/mbot/cron/simple_html_dom.php');
@@ -46,6 +46,7 @@ $date = date('Y-m-d');
 $yesterday = strtotime( '-1 day', strtotime ( $date ));
 $yesterday = date( 'Y-m-j', $yesterday);
 $retailer = basename(__FILE__, '.php'); 
+$filename = date('Y-m-d') . "laanonima_log.php";
 
 if(isset($argv[1])) {
     $from = $argv[1];
@@ -100,19 +101,21 @@ while($row = mysqli_fetch_array($result))
 					if ($conn->query($sql) === TRUE) {
 						echo "";
 					} 
-				$date = date("Y-m-d H:i:s");
 			}
-			echo "<span class='text-success'>[Id: $id] $date : Categoría $cat cargada.</span><br />\n";
+		// Imprimir mensajes
+		$date = date("Y-m-d H:i:s");
+            $catStatus = "<span class='text-success'>[Id: $id] $date : Categoría $cat cargada.</span><br />\n";
         } else {
-        echo "<span class='text-warning'>[Id: $id] Hubo un error con la categoría $cat . Compruebe el $link .</span><br /> \n";
-        }
+            $catStatus = "<span class='text-warning'>[Id: $id] Hubo un error con la categoría $cat . Compruebe el link: $link .</span><br /> \n";
+        }   
+        $htmlStr = $catStatus;
+        file_put_contents('/var/www/html/mbot/cron/logs/'.$filename, $htmlStr, FILE_APPEND);
 }
 $time_elapsed = microtime(true) - $start;
 $tieme_readable = conversorSegundosHoras($time_elapsed);
 echo " <div class='alert alert-info'>El script de $retailer se ejecutó en $tieme_readable segundos y se cargaron $cantidad productos</div> \n";
 $htmlStr = ob_get_contents();
 ob_end_clean(); 
-$filename = date('Y-m-d') . $retailer . "_log.php";
 file_put_contents('/var/www/html/mbot/cron/logs/'.$filename, $htmlStr, FILE_APPEND);
 
 ?>

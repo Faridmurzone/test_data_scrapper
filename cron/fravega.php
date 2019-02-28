@@ -46,6 +46,7 @@ $date = date('Y-m-d');
 $yesterday = strtotime( '-1 day', strtotime ( $date ));
 $yesterday = date( 'Y-m-j', $yesterday);
 $retailer = basename(__FILE__, '.php'); 
+$filename = date('Y-m-d') . $retailer . "_log.php";
 
 
 if(isset($argv[1])) {
@@ -112,28 +113,25 @@ while($row = mysqli_fetch_array($result))
                     VALUES ('$titulo', '$precio_lista', '$precio_oferta', '$category', '$retailer', '$marca', '$modelo', '$date', '$combo', '$img', '$link', '$screenshot')";
                 if ($conn->query($sql) === TRUE) {
                      echo "";
-                } else {
-                    echo "Error: " . $sql . " " . $conn->error;
                 }
             echo $conn->error;
-            } else {
-                echo "El producto " . $titulo . " ya fue cargado hoy \n";
-            }
+            } 
             // Fin del insert    
         }
         // Imprimir mensajes
         $date = date("Y-m-d H:i:s");
-        echo "\n<span class='text-success'>$date : Categoría $cat cargada.</span><br />\n";
+            $catStatus = "<span class='text-success'>[Id: $id] $date : Categoría $cat cargada.</span><br />\n";
         } else {
-        echo "\n<span class='text-warning'>URL $link es inválida...</span><br /> \n";
-        }
+            $catStatus = "<span class='text-warning'>[Id: $id] Hubo un error con la categoría $cat . Compruebe el link: $link .</span><br /> \n";
+        }   
+        $htmlStr = $catStatus;
+        file_put_contents('/var/www/html/mbot/cron/logs/'.$filename, $htmlStr, FILE_APPEND);
 }
 $time_elapsed = microtime(true) - $start;
 $tieme_readable = conversorSegundosHoras($time_elapsed);
 echo " <div class='alert alert-info'>El script de $retailer se ejecutó en $tieme_readable segundos y se cargaron $cantidad productos</div> \n";
 $htmlStr = ob_get_contents();
 ob_end_clean(); 
-$filename = date('Y-m-d') . $retailer . "_log.php";
 file_put_contents('/var/www/html/mbot/cron/logs/'.$filename, $htmlStr, FILE_APPEND);
 
 ?>

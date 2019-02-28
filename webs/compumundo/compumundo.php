@@ -115,7 +115,6 @@ if(isset($_GET['link'])) {
 
 			// Busca Combos
 			include('../../resources/library/findCombo.php');
-
 			// Preview de subida
 			include(ASSETS.'print.php');
 			// PARA INSERTAR EN DB
