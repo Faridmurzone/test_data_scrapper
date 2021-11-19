@@ -22,9 +22,9 @@ function conversorSegundosHoras($tiempo_en_segundos) {
 }
 
 // DB
-$servername = "localhost";
-$username = "mbot";
-$password = "Sismrt_2013";
+$servername = "";
+$username = "";
+$password = 
 $dbname = "mbot";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
