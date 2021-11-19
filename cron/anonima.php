@@ -22,10 +22,10 @@ function conversorSegundosHoras($tiempo_en_segundos) {
 }
 
 // DB
-$servername = "localhost";
-$username = "mbot";
-$password = "Sismrt_2013";
-$dbname = "mbot";
+$servername = "";
+$username = "";
+$password = "";
+$dbname = "";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Charset
@@ -46,7 +46,6 @@ $date = date('Y-m-d');
 $yesterday = strtotime( '-1 day', strtotime ( $date ));
 $yesterday = date( 'Y-m-j', $yesterday);
 $retailer = basename(__FILE__, '.php'); 
-
 
 if(isset($argv[1])) {
     $from = $argv[1];
